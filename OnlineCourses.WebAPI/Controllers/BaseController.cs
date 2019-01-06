@@ -5,7 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 namespace OnlineCourses.WebAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    // [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public abstract class BaseController : Controller
     {
         private IMediator _mediator;

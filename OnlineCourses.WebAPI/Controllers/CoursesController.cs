@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using OnlineCourses.Application;
 
 namespace OnlineCourses.WebAPI.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
     public class CoursesController : BaseController
     {
         // GET api/values
         [HttpGet]
-        public async Task<IActionResult> GetCategoryPreview([FromQuery] GetCoursePreviewQuery query)
+        public async Task<IActionResult> Get()
         {
-            return Ok(await Mediator.Send(query));
+            return Ok(await Mediator.Send(new GetCoursePreviewQuery()));
         }
 
         // GET api/values/5
