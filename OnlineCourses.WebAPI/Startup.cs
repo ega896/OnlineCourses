@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OnlineCourses.Application;
+using OnlineCourses.Application.Courses.Queries;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace OnlineCourses.WebAPI

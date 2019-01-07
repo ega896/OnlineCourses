@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -16,5 +16,13 @@
   <ItemGroup>
     <ProjectReference Include="..\OnlineCourses.Application\OnlineCourses.Application.csproj" />
   </ItemGroup>
+
+  <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="echo &quot;App Offline&quot; /a &gt; $(ProjectDir)app_offline.htm" />
+  </Target>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="del $(ProjectDir)app_offline.htm" />
+  </Target>-->
 
 </Project>

@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using OnlineCourses.Application;
+using OnlineCourses.Application.Courses.Commands;
+using OnlineCourses.Application.Courses.Queries;
 
 namespace OnlineCourses.WebAPI.Controllers
 {
@@ -22,8 +24,9 @@ namespace OnlineCourses.WebAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateCourseCommand command)
         {
+            return Ok(await Mediator.Send(command));
         }
 
         // PUT api/values/5
