@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.WebAPI", "OnlineCourses.WebAPI\OnlineCourses.WebAPI.csproj", "{0B8221EB-780B-4287-AD1D-5C3F3C7CE614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.WebAPI", "OnlineCourses.WebAPI\OnlineCourses.WebAPI.csproj", "{0B8221EB-780B-4287-AD1D-5C3F3C7CE614}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.Application", "OnlineCourses.Application\OnlineCourses.Application.csproj", "{75D57374-12AD-49AA-92C6-BC5C23D63AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Application", "OnlineCourses.Application\OnlineCourses.Application.csproj", "{75D57374-12AD-49AA-92C6-BC5C23D63AA7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Persistence", "OnlineCourses.Persistence\OnlineCourses.Persistence.csproj", "{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.Domain", "OnlineCourses.Domain\OnlineCourses.Domain.csproj", "{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{75D57374-12AD-49AA-92C6-BC5C23D63AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D57374-12AD-49AA-92C6-BC5C23D63AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D57374-12AD-49AA-92C6-BC5C23D63AA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

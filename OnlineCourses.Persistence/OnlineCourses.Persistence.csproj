@@ -6,13 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="8.1.2" />
-    <PackageReference Include="MediatR" Version="6.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineCourses.Domain\OnlineCourses.Domain.csproj" />
-    <ProjectReference Include="..\OnlineCourses.Persistence\OnlineCourses.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

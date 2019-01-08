@@ -3,9 +3,11 @@ using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OnlineCourses.Application.Courses.Queries;
+using OnlineCourses.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace OnlineCourses.WebAPI
@@ -22,13 +24,21 @@ namespace OnlineCourses.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddMediatR()
-                .AddSwaggerGen(c =>
+            services.AddMediatR();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info
                 {
-                    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-                })
-                .AddMvc()
+                    Title = "My API",
+                    Version = "v1"
+                });
+            });
+
+            services.AddDbContext<OnlineCoursesDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("database")));
+
+            services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);

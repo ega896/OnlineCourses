@@ -2,12 +2,21 @@
 using System.Threading.Tasks;
 using FluentValidation;
 using MediatR;
+using OnlineCourses.Domain.Entities;
+using OnlineCourses.Persistence;
 
 namespace OnlineCourses.Application.Courses.Commands
 {
     public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, Unit>
     {
-        public Task<Unit> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+        private readonly OnlineCoursesDbContext _context;
+
+        public CreateCourseCommandHandler(OnlineCoursesDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Unit> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
             var entity = new Course
             {
@@ -15,11 +24,10 @@ namespace OnlineCourses.Application.Courses.Commands
                 Description = request.Description
             };
 
-            // add in db logic
-            //_context.Customers.Add(entity);
-            //await _context.SaveChangesAsync(cancellationToken);
+            _context.Courses.Add(entity);
+            await _context.SaveChangesAsync(cancellationToken);
 
-            return Task.Run(() => Unit.Value, cancellationToken);
+            return Unit.Value;
         }
     }
 
@@ -37,14 +45,5 @@ namespace OnlineCourses.Application.Courses.Commands
             RuleFor(x => x.Name).NotEmpty().Length(10, 30).WithMessage("Name validation failed");
             RuleFor(x => x.Description).Length(10, 260);
         }
-    }
-
-    public class Course
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
     }
 }
