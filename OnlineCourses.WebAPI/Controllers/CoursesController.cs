@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using OnlineCourses.Application;
 using OnlineCourses.Application.Courses.Commands;
 using OnlineCourses.Application.Courses.Queries;
 

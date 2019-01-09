@@ -14,7 +14,7 @@ namespace OnlineCourses.Persistence
                 .GetMethods(BindingFlags.Instance | BindingFlags.Public)
                 .First(m => m.Name.Equals("ApplyConfiguration", StringComparison.OrdinalIgnoreCase));
 
-            var ret = typeof(OnlineCoursesDbContext).Assembly
+            var ret = typeof(CoursesDbContext).Assembly
                 .GetTypes()
                 .Select(t => (t, i: t.GetInterfaces()
                     .FirstOrDefault(i => i.Name.Equals(typeof(IEntityTypeConfiguration<>).Name, StringComparison.Ordinal))))

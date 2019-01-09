@@ -1,8 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
+using OnlineCourses.Domain.Entities;
 using OnlineCourses.Persistence;
 
 namespace OnlineCourses.Application.Courses.Queries
@@ -13,43 +17,40 @@ namespace OnlineCourses.Application.Courses.Queries
 
     public class GetCoursePreviewQueryHandler : IRequestHandler<GetCoursePreviewQuery, List<CoursePreviewDto>>
     {
-        private readonly OnlineCoursesDbContext _context;
+        private readonly CoursesDbContext _context;
 
-        public GetCoursePreviewQueryHandler(OnlineCoursesDbContext context)
+        public GetCoursePreviewQueryHandler(CoursesDbContext context)
         {
             _context = context;
         }
 
         public Task<List<CoursePreviewDto>> Handle(GetCoursePreviewQuery request, CancellationToken cancellationToken)
         {
-            // Add projection and fetch all from database
-
-            var courses = new List<CoursePreviewDto>
-            {
-                new CoursePreviewDto
-                {
-                    Description = "Intermediate",
-                    Id = 1,
-                    Name = "English"
-                },
-                new CoursePreviewDto
-                {
-                    Description = "I am superman",
-                    Id = 2,
-                    Name = "Psychology"
-                }
-            };
-
-            return Task.Run(() => courses, cancellationToken);
+            return _context.Courses
+                .Select(CoursePreviewDto.Projection)
+                .ToListAsync(cancellationToken);
         }
     }
 
     public class CoursePreviewDto
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public static Expression<Func<Course, CoursePreviewDto>> Projection
+        {
+            get
+            {
+                return c => new CoursePreviewDto
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description
+                };
+            }
+        }
     }
 }
