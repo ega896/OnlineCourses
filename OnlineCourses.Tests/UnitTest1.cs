@@ -7,7 +7,7 @@ namespace OnlineCourses.Tests
         [Fact]
         public void CreateCourseCommandTest()
         {
-
+            Assert.Equal(4, 2 + 2);
         }
     }
 }
