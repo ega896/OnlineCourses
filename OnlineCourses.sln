@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Application",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Persistence", "OnlineCourses.Persistence\OnlineCourses.Persistence.csproj", "{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.Domain", "OnlineCourses.Domain\OnlineCourses.Domain.csproj", "{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Domain", "OnlineCourses.Domain\OnlineCourses.Domain.csproj", "{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.Tests", "OnlineCourses.Tests\OnlineCourses.Tests.csproj", "{F817EF5A-6635-41EA-9AF9-D240560B306A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F817EF5A-6635-41EA-9AF9-D240560B306A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F817EF5A-6635-41EA-9AF9-D240560B306A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F817EF5A-6635-41EA-9AF9-D240560B306A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F817EF5A-6635-41EA-9AF9-D240560B306A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
