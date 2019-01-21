@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace OnlineCourses.Domain.Entities
+namespace Courses.Domain.Entities
 {
     public abstract class BaseEntity
     {

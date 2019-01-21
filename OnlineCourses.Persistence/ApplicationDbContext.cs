@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineCourses.Domain.Entities;
+﻿using Courses.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
-namespace OnlineCourses.Persistence
+namespace Courses.Persistence
 {
     public class ApplicationDbContext : DbContext
     {

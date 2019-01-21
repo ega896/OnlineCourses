@@ -1,8 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Courses.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineCourses.Domain.Entities;
 
-namespace OnlineCourses.Persistence.Configurations
+namespace Courses.Persistence.Configurations
 {
     public class CourseConfiguration : IEntityTypeConfiguration<Course>
     {

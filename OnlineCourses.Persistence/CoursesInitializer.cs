@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-using OnlineCourses.Domain.Entities;
+﻿using Courses.Domain.Entities;
+using Microsoft.EntityFrameworkCore.Internal;
 
-namespace OnlineCourses.Persistence
+namespace Courses.Persistence
 {
     public class CoursesInitializer
     {

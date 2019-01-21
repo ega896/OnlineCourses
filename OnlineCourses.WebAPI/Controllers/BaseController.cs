@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace OnlineCourses.WebAPI.Controllers
+namespace Courses.WebAPI.Controllers
 {
     [ApiController]
     // [Route("api/[controller]/[action]")]

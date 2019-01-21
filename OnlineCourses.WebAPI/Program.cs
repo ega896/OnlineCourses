@@ -1,12 +1,12 @@
 ﻿using System;
+using Courses.Persistence;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using OnlineCourses.Persistence;
 
-namespace OnlineCourses.WebAPI
+namespace Courses.WebAPI
 {
     public class Program
     {

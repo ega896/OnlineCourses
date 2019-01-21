@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using OnlineCourses.Domain.Entities;
+using Courses.Domain.Entities;
 
-namespace OnlineCourses.Application.Courses.Queries
+namespace Courses.Application.Courses.Queries
 {
     public class CoursePreviewDto
     {

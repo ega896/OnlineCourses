@@ -1,4 +1,4 @@
-﻿namespace OnlineCourses.Infrastructure
+﻿namespace Courses.Infrastructure
 {
     public interface IFileService
     {

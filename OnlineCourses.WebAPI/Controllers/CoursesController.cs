@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using OnlineCourses.Application.Courses.Commands;
-using OnlineCourses.Application.Courses.Queries;
+﻿using System.Threading.Tasks;
+using Courses.Application.Courses.Commands;
+using Courses.Application.Courses.Queries;
+using Microsoft.AspNetCore.Mvc;
 
-namespace OnlineCourses.WebAPI.Controllers
+namespace Courses.WebAPI.Controllers
 {
     public class CoursesController : BaseController
     {

@@ -1,4 +1,6 @@
 ﻿using System.Reflection;
+using Courses.Application.Courses.Queries;
+using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -6,11 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using OnlineCourses.Application.Courses.Queries;
-using OnlineCourses.Persistence;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace OnlineCourses.WebAPI
+namespace Courses.WebAPI
 {
     public class Startup
     {

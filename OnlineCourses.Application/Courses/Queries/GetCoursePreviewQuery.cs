@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Courses.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using OnlineCourses.Persistence;
 
-namespace OnlineCourses.Application.Courses.Queries
+namespace Courses.Application.Courses.Queries
 {
     public class GetCoursePreviewQuery : IRequest<List<CoursePreviewDto>>
     {

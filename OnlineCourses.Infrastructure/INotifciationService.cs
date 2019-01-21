@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace OnlineCourses.Infrastructure
+﻿namespace Courses.Infrastructure
 {
     public interface INotificationService
     {

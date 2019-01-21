@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
+using Courses.Domain.Entities;
+using Courses.Persistence;
 using MediatR;
-using OnlineCourses.Domain.Entities;
-using OnlineCourses.Persistence;
 
-namespace OnlineCourses.Application.Courses.Commands
+namespace Courses.Application.Courses.Commands
 {
     public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, Unit>
     {

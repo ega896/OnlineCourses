@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace OnlineCourses.Tests
+namespace Courses.Tests
 {
     public class UnitTest1
     {

@@ -1,4 +1,4 @@
-﻿namespace OnlineCourses.Domain.Entities
+﻿namespace Courses.Domain.Entities
 {
     public class Course : BaseEntity
     {      

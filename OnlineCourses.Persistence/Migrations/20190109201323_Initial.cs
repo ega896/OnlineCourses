@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace OnlineCourses.Persistence.Migrations
+namespace Courses.Persistence.Migrations
 {
     public partial class Initial : Migration
     {
