@@ -8,9 +8,9 @@ namespace OnlineCourses.Application.Courses.Commands
 {
     public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, Unit>
     {
-        private readonly CoursesDbContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public CreateCourseCommandHandler(CoursesDbContext context)
+        public CreateCourseCommandHandler(ApplicationDbContext context)
         {
             _context = context;
         }

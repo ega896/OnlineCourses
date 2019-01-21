@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.168
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.WebAPI", "OnlineCourses.WebAPI\OnlineCourses.WebAPI.csproj", "{0B8221EB-780B-4287-AD1D-5C3F3C7CE614}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.WebAPI", "OnlineCourses.WebAPI\Courses.WebAPI.csproj", "{0B8221EB-780B-4287-AD1D-5C3F3C7CE614}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Application", "OnlineCourses.Application\OnlineCourses.Application.csproj", "{75D57374-12AD-49AA-92C6-BC5C23D63AA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Application", "OnlineCourses.Application\Courses.Application.csproj", "{75D57374-12AD-49AA-92C6-BC5C23D63AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Persistence", "OnlineCourses.Persistence\OnlineCourses.Persistence.csproj", "{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Persistence", "OnlineCourses.Persistence\Courses.Persistence.csproj", "{748F9D74-22D8-4F1D-AB21-C4D63F3DF305}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Domain", "OnlineCourses.Domain\OnlineCourses.Domain.csproj", "{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Domain", "OnlineCourses.Domain\Courses.Domain.csproj", "{0CA9DAAD-A9F1-44A6-A74E-13870C08408F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnlineCourses.Tests", "OnlineCourses.Tests\OnlineCourses.Tests.csproj", "{F817EF5A-6635-41EA-9AF9-D240560B306A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Tests", "OnlineCourses.Tests\Courses.Tests.csproj", "{F817EF5A-6635-41EA-9AF9-D240560B306A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OnlineCourses.Infrastructure", "OnlineCourses.Infrastructure\OnlineCourses.Infrastructure.csproj", "{76C77062-D9C4-4D17-86FD-934111E9B146}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Infrastructure", "OnlineCourses.Infrastructure\Courses.Infrastructure.csproj", "{76C77062-D9C4-4D17-86FD-934111E9B146}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

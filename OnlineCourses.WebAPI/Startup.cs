@@ -35,7 +35,7 @@ namespace OnlineCourses.WebAPI
                 });
             });
 
-            services.AddDbContext<CoursesDbContext>(options =>
+            services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CoursesDatabase")));
 
             services.AddMvc()

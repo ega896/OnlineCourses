@@ -5,13 +5,13 @@ namespace OnlineCourses.Persistence
 {
     public class CoursesInitializer
     {
-        public static void Initialize(CoursesDbContext context)
+        public static void Initialize(ApplicationDbContext context)
         {
             var initializer = new CoursesInitializer();
             initializer.SeedEverything(context);
         }
 
-        public void SeedEverything(CoursesDbContext context)
+        public void SeedEverything(ApplicationDbContext context)
         {
             context.Database.EnsureCreated();
 
@@ -20,7 +20,7 @@ namespace OnlineCourses.Persistence
             SeedCourses(context);
         }
 
-        private void SeedCourses(CoursesDbContext context)
+        private void SeedCourses(ApplicationDbContext context)
         {
             var courses = new[]
             {

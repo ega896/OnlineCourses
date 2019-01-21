@@ -3,9 +3,9 @@ using OnlineCourses.Domain.Entities;
 
 namespace OnlineCourses.Persistence
 {
-    public class CoursesDbContext : DbContext
+    public class ApplicationDbContext : DbContext
     {
-        public CoursesDbContext(DbContextOptions<CoursesDbContext> options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
         }

@@ -18,7 +18,7 @@ namespace OnlineCourses.WebAPI
             {
                 try
                 {
-                    var context = scope.ServiceProvider.GetService<CoursesDbContext>();
+                    var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
                     context.Database.Migrate();
 
                     CoursesInitializer.Initialize(context);

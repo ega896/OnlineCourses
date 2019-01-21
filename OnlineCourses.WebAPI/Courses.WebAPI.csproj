@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineCourses.Application\OnlineCourses.Application.csproj" />
+    <ProjectReference Include="..\OnlineCourses.Application\Courses.Application.csproj" />
   </ItemGroup>
 
   <!--<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

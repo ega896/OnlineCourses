@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OnlineCourses.Domain\OnlineCourses.Domain.csproj" />
-    <ProjectReference Include="..\OnlineCourses.Persistence\OnlineCourses.Persistence.csproj" />
+    <ProjectReference Include="..\OnlineCourses.Domain\Courses.Domain.csproj" />
+    <ProjectReference Include="..\OnlineCourses.Persistence\Courses.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

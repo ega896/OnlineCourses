@@ -9,7 +9,7 @@ using OnlineCourses.Persistence;
 
 namespace OnlineCourses.Persistence.Migrations
 {
-    [DbContext(typeof(CoursesDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20190109201323_Initial")]
     partial class Initial
     {

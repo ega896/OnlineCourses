@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace OnlineCourses.Persistence.Migrations
 {
-    [DbContext(typeof(CoursesDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class CoursesDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
