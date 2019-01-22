@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineCourses.Application\Courses.Application.csproj" />
+    <ProjectReference Include="..\OnlineCourses.Infrastructure\Courses.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

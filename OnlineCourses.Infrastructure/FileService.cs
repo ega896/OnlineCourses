@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 
 namespace Courses.Infrastructure
 {
@@ -17,24 +18,22 @@ namespace Courses.Infrastructure
             _hostingEnvironment = hostingEnvironment;
         }
 
-        public async Task SaveFiles(ICollection<IFormFile> files, CancellationToken cancellationToken)
+        public async Task<long> SaveFiles(ICollection<IFormFile> files)
         {
-            string contentRootPath = _hostingEnvironment.WebRootPath;
-
-            long size = files.Sum(f => f.Length);
-
             // full path to file in temp location
-            var filePath = Path.GetTempFileName();
+            var filePath = _hostingEnvironment.WebRootPath;
 
-            foreach (var formFile in files)
+            foreach (var file in files)
             {
-                if (formFile.Length <= 0) continue;
+                if (file.Length <= 0) continue;
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                using (var stream = new FileStream($"{filePath}/{Guid.NewGuid()}{Path.GetExtension(file.FileName)}", FileMode.Create))
                 {
-                    await formFile.CopyToAsync(stream, cancellationToken);
+                    await file.CopyToAsync(stream);
                 }
             }
+
+            return files.Sum(f => f.Length);
         }
     }
 }

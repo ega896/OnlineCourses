@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Reflection;
 using Courses.Application.Courses.Queries;
+using Courses.Infrastructure;
 using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -27,6 +28,8 @@ namespace Courses.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IFileService, FileService>();
+
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             services.AddSwaggerGen(c =>
@@ -36,6 +39,7 @@ namespace Courses.WebAPI
                     Title = "Courses API",
                     Version = "v1"
                 });
+                c.OperationFilter<FileUploadOperation>(); //Register File Upload Operation Filter
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -68,11 +72,11 @@ namespace Courses.WebAPI
 
             app.UseStaticFiles(); // For the wwwroot folder
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
-                RequestPath = new PathString("/Uploads")
-            });
+            //app.UseStaticFiles(new StaticFileOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
+            //    RequestPath = new PathString("/Uploads")
+            //});
         }
     }
 }
