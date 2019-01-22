@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Courses.Application.Courses.Commands
+namespace Courses.Application.Courses.Commands.Create
 {
     public class CreateCourseCommandValidator : AbstractValidator<CreateCourseCommand>
     {

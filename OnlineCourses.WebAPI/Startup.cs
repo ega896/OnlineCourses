@@ -3,6 +3,7 @@ using System.Reflection;
 using Courses.Application.Courses.Queries;
 using Courses.Infrastructure;
 using Courses.Persistence;
+using Courses.WebAPI.SwaggerFilters;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

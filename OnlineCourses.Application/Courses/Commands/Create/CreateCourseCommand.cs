@@ -4,7 +4,7 @@ using Courses.Domain.Entities;
 using Courses.Persistence;
 using MediatR;
 
-namespace Courses.Application.Courses.Commands
+namespace Courses.Application.Courses.Commands.Create
 {
     public class CreateCourseCommandHandler : IRequestHandler<CreateCourseCommand, Unit>
     {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,11 +8,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Courses.Application.Courses.Queries
 {
-    public class GetCoursePreviewQuery : IRequest<List<CoursePreviewDto>>
+    public class GetCoursePreviewQuery : IRequest<CoursePreviewDto>
     {
+        public Guid Id { get; set; }
     }
 
-    public class GetCoursePreviewQueryHandler : IRequestHandler<GetCoursePreviewQuery, List<CoursePreviewDto>>
+    public class GetCoursePreviewQueryHandler : IRequestHandler<GetCoursePreviewQuery, CoursePreviewDto>
     {
         private readonly ApplicationDbContext _context;
 
@@ -21,11 +22,11 @@ namespace Courses.Application.Courses.Queries
             _context = context;
         }
 
-        public Task<List<CoursePreviewDto>> Handle(GetCoursePreviewQuery request, CancellationToken cancellationToken)
+        public Task<CoursePreviewDto> Handle(GetCoursePreviewQuery request, CancellationToken cancellationToken)
         {
             return _context.Courses
                 .Select(CoursePreviewDto.Projection)
-                .ToListAsync(cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         }
     }
 }
