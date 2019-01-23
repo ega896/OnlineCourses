@@ -9,5 +9,7 @@ namespace Courses.Infrastructure
         Task<long> SaveFiles(ICollection<IFormFile> files);
 
         Task<byte[]> GetFile(string path, string fileName);
+
+        Task<string> SaveFile(IFormFile file);
     }
 }

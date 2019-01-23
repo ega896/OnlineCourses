@@ -35,6 +35,20 @@ namespace Courses.Infrastructure
             return files.Sum(f => f.Length);
         }
 
+        public async Task<string> SaveFile(IFormFile file)
+        {
+            // full path to file in temp location
+            var filePath = _hostingEnvironment.WebRootPath;
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
+
+            using (var stream = new FileStream($"{filePath}/fileName", FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+
+            return fileName;
+        }
+
         public async Task<byte[]> GetFile(string path, string fileName)
         {
             var fullPath = Path.Combine(path, fileName);

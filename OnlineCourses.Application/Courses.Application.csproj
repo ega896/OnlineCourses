@@ -12,7 +12,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineCourses.Domain\Courses.Domain.csproj" />
+    <ProjectReference Include="..\OnlineCourses.Infrastructure\Courses.Infrastructure.csproj" />
     <ProjectReference Include="..\OnlineCourses.Persistence\Courses.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Microsoft.AspNetCore.Http.Features">
+      <HintPath>C:\Program Files\dotnet\sdk\NuGetFallbackFolder\microsoft.aspnetcore.http.features\2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
