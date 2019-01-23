@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.StaticFiles;
 
 namespace Courses.Infrastructure
 {
@@ -34,6 +33,13 @@ namespace Courses.Infrastructure
             }
 
             return files.Sum(f => f.Length);
+        }
+
+        public async Task<byte[]> GetFile(string path, string fileName)
+        {
+            var fullPath = Path.Combine(path, fileName);
+            var content = await File.ReadAllBytesAsync(fullPath);
+            return content;
         }
     }
 }

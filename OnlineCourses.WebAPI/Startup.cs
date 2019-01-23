@@ -40,7 +40,7 @@ namespace Courses.WebAPI
                     Title = "Courses API",
                     Version = "v1"
                 });
-                c.OperationFilter<FileUploadOperation>(); //Register File Upload Operation Filter
+                c.OperationFilter<FileUploadOperation>();
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>

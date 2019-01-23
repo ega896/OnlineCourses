@@ -7,5 +7,7 @@ namespace Courses.Infrastructure
     public interface IFileService
     {
         Task<long> SaveFiles(ICollection<IFormFile> files);
+
+        Task<byte[]> GetFile(string path, string fileName);
     }
 }
