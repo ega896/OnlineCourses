@@ -11,7 +11,7 @@ namespace Courses.WebAPI.SwaggerFilters
     {
         private readonly IEnumerable<string> _actionsWithUpload = new []
         {
-            NamingHelpers.GetOperationId<FilesController>(nameof(FilesController.Post)),
+            NamingHelpers.GetOperationId<FilesController>(nameof(FilesController.Post))
         };
 
         public void Apply(Operation operation, OperationFilterContext context)

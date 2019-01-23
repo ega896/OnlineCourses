@@ -25,7 +25,7 @@ namespace Courses.Application.Courses.Commands.Create
             {
                 Name = request.Name,
                 Description = request.Description,
-                AvatarFileName = await _fileService.SaveFile(request.File)
+                AvatarFileName = request.File != null ? await _fileService.SaveFile(request.File) : null
             };
 
             _context.Courses.Add(entity);
