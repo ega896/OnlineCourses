@@ -25,20 +25,18 @@ namespace Courses.WebAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
-                    options.Authority = "http://localhost:5000"; // auth server base endpoint (will use to search for disco doc)
-                    options.ApiName = "demo_api"; // required audience of access tokens
-                    options.RequireHttpsMetadata = false; // dev only!
+                    options.Authority = "http://localhost:5000"; 
+                    options.ApiName = "courses_api";
+                    options.RequireHttpsMetadata = false; // dev only
                 });
-
-            services.AddScoped<IFileService, FileService>();
-
-            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -50,24 +48,29 @@ namespace Courses.WebAPI
 
                 c.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
-                    Flow = "implicit", // just get token via browser (suitable for swagger SPA)
+                    Flow = "implicit",
                     AuthorizationUrl = "http://localhost:5000/connect/authorize",
-                    Scopes = new Dictionary<string, string> { { "demo_api", "Demo API - full access" } }
+                    TokenUrl = "http://localhost:5000/connect/token",
+                    Scopes = new Dictionary<string, string>
+                    {
+                        { "courses_api", "Demo API - full access" }
+                    }
                 });
 
-                c.OperationFilter<FileUploadOperation>();
+                c.OperationFilter<FileUploadOperationFilter>();
+                c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CoursesDatabase")));
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IFileService, FileService>();
+
+            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly); 
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
+        {           
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -78,18 +81,22 @@ namespace Courses.WebAPI
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+
             app.UseHttpsRedirection();
-            app.UseMvc();
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
 
-                c.OAuthClientId("demo_api_swagger");
-                c.OAuthAppName("Demo API - Swagger"); 
+                c.OAuthClientId("courses_api_swagger");
+                c.OAuthAppName("Courses API - Swagger"); 
             });
 
-            app.UseStaticFiles(); // For the wwwroot folder
+            app.UseStaticFiles(); 
+
+            app.UseMvc();
         }
     }
 }

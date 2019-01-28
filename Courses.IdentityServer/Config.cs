@@ -18,7 +18,7 @@ namespace Courses.IdentityServer
         {
             return new[]
             {
-                new ApiResource("demo_api", "Demo API with Swagger")
+                new ApiResource("courses_api", "Courses API with Swagger")
             };
         }
 
@@ -28,7 +28,7 @@ namespace Courses.IdentityServer
             {
                 new Client
                 {
-                    ClientId = "demo_api_swagger",
+                    ClientId = "courses_api_swagger",
                     ClientName = "Swagger UI for demo_api",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
@@ -37,7 +37,7 @@ namespace Courses.IdentityServer
                         "https://localhost/swagger/oauth2-redirect.html",
                         "https://localhost/swagger/o2c.html"
                     },
-                    AllowedScopes = { "demo_api" }
+                    AllowedScopes = { "courses_api" }
                 }
             };
         }

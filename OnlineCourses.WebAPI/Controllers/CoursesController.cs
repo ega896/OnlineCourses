@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Courses.Application.Courses.Commands;
 using Courses.Application.Courses.Commands.Create;
 using Courses.Application.Courses.Commands.Delete;
 using Courses.Application.Courses.Queries;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Courses.WebAPI.Controllers
@@ -11,8 +11,11 @@ namespace Courses.WebAPI.Controllers
     public class CoursesController : BaseController
     {
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(Guid id)
         {
+            var a = User;
+
             return Ok(await Mediator.Send(new GetCoursePreviewQuery {Id = id}));
         }
 

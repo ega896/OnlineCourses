@@ -29,6 +29,7 @@ namespace Courses.IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             var connectionString = Configuration.GetConnectionString("identitiesDatabase");
+
             var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -38,7 +39,7 @@ namespace Courses.IdentityServer
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_2_2);
 
             services.Configure<IISOptions>(iis =>
             {
@@ -84,11 +85,8 @@ namespace Courses.IdentityServer
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    // register your IdentityServer with Google at https://console.developers.google.com
-                    // enable the Google+ API
-                    // set the redirect URI to http://localhost:5000/signin-google
-                    options.ClientId = "copy client ID from Google here";
-                    options.ClientSecret = "copy client secret from Google here";
+                    options.ClientId = Configuration.GetSection("GooglePlusApi").GetSection("clientId").Value;
+                    options.ClientSecret = Configuration.GetSection("GooglePlusApi").GetSection("clientSecret").Value;
                 });
         }
 

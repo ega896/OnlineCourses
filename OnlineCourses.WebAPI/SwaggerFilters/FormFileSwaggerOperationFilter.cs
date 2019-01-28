@@ -7,7 +7,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Courses.WebAPI.SwaggerFilters
 {
-    public class FileUploadOperation : IOperationFilter
+    public class FileUploadOperationFilter : IOperationFilter
     {
         private readonly IEnumerable<string> _actionsWithUpload = new []
         {
