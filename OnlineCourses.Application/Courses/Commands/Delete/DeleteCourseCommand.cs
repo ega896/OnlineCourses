@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Courses.Persistence;
 using MediatR;
 
-namespace Courses.Application.Courses.Commands
+namespace Courses.Application.Courses.Commands.Delete
 {
     public class DeleteCourseCommandHandler : IRequestHandler<DeleteCourseCommand, Unit>
     {

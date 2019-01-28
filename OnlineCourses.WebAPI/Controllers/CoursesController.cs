@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Courses.Application.Courses.Commands;
 using Courses.Application.Courses.Commands.Create;
+using Courses.Application.Courses.Commands.Delete;
 using Courses.Application.Courses.Queries;
 using Microsoft.AspNetCore.Mvc;
 

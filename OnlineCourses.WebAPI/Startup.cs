@@ -1,8 +1,10 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
 using Courses.Application.Courses.Queries;
 using Courses.Infrastructure;
 using Courses.Persistence;
 using Courses.WebAPI.SwaggerFilters;
+using IdentityServer4.AccessTokenValidation;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +28,14 @@ namespace Courses.WebAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "http://localhost:5000"; // auth server base endpoint (will use to search for disco doc)
+                    options.ApiName = "demo_api"; // required audience of access tokens
+                    options.RequireHttpsMetadata = false; // dev only!
+                });
+
             services.AddScoped<IFileService, FileService>();
 
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
@@ -37,6 +47,14 @@ namespace Courses.WebAPI
                     Title = "Courses API",
                     Version = "v1"
                 });
+
+                c.AddSecurityDefinition("oauth2", new OAuth2Scheme
+                {
+                    Flow = "implicit", // just get token via browser (suitable for swagger SPA)
+                    AuthorizationUrl = "http://localhost:5000/connect/authorize",
+                    Scopes = new Dictionary<string, string> { { "demo_api", "Demo API - full access" } }
+                });
+
                 c.OperationFilter<FileUploadOperation>();
             });
 
@@ -66,15 +84,12 @@ namespace Courses.WebAPI
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+
+                c.OAuthClientId("demo_api_swagger");
+                c.OAuthAppName("Demo API - Swagger"); 
             });
 
             app.UseStaticFiles(); // For the wwwroot folder
-
-            //app.UseStaticFiles(new StaticFileOptions
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
-            //    RequestPath = new PathString("/Uploads")
-            //});
         }
     }
 }
