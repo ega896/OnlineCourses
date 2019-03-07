@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Courses.WebApi/Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    volumes: 
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "123456"
+  proxy:
+    depends_on:
+      - app
+    image: nginx:latest
+    volumes: 
+      - ./nginx/default.conf:/etc/nginx/nginx.conf
+    ports:
+      - "80:80"
+  
