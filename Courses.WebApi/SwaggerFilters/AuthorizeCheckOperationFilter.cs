@@ -19,7 +19,11 @@ namespace Courses.WebAPI.SwaggerFilters
 
                 operation.Security = new List<IDictionary<string, IEnumerable<string>>>
                 {
-                    new Dictionary<string, IEnumerable<string>> {{"oauth2", new[] {"demo_api"}}}
+                    new Dictionary<string, IEnumerable<string>>
+                    {
+                        { "Bearer", new string[]{ } },
+                        { "Basic", new string[]{ } }
+                    }
                 };
             }
         }

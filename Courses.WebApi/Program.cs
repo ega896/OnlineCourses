@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading;
 using Courses.Persistence;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
