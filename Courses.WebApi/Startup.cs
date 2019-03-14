@@ -136,6 +136,12 @@ namespace Courses.WebAPI
                 app.UseHsts();
             }
 
+            app.UseCors(builder => builder
+                .AllowCredentials()
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
+
             app.UseStaticFiles();
 
             app.UseAuthentication();

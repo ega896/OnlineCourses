@@ -11,7 +11,6 @@ namespace Courses.WebAPI.Controllers
     public class CoursesController : BaseController
     {
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> Get()
         {
             return Ok(await Mediator.Send(new GetCoursesQuery()));
@@ -24,17 +23,20 @@ namespace Courses.WebAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Post([FromBody] CreateCourseCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             return Ok(await Mediator.Send(new DeleteCourseCommand {Id = id}));
