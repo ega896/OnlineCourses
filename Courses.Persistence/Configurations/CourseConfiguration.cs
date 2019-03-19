@@ -15,6 +15,10 @@ namespace Courses.Persistence.Configurations
             builder.Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(260);
+
+            builder.HasOne(p => p.File)
+                .WithOne(i => i.Course)
+                .HasForeignKey<AppFile>(b => b.CourseId);
         }
     }
 }

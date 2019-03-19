@@ -26,7 +26,7 @@ namespace Courses.Infrastructure
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
                 identity.FindFirst(Jwt.Rol),
-                identity.FindFirst(Jwt.Id)
+                identity.FindFirst()
             };
 
             // Create the JWT security token and encode it.
@@ -47,8 +47,9 @@ namespace Courses.Infrastructure
         {
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
-                new Claim(Jwt.Id, id),
+                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", id),
                 new Claim(Jwt.Rol, Jwt.ApiAccess)
+
             });
         }
 

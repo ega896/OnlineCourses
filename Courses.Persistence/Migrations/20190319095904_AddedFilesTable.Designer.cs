@@ -3,15 +3,17 @@ using System;
 using Courses.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Courses.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190319095904_AddedFilesTable")]
+    partial class AddedFilesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,11 +53,7 @@ namespace Courses.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
-                    b.Property<Guid>("UserId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -223,14 +221,6 @@ namespace Courses.Persistence.Migrations
                     b.HasOne("Courses.Domain.Entities.Course", "Course")
                         .WithOne("File")
                         .HasForeignKey("Courses.Domain.Entities.AppFile", "CourseId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("Courses.Domain.Entities.Course", b =>
-                {
-                    b.HasOne("Courses.Domain.Entities.User", "User")
-                        .WithMany("Courses")
-                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

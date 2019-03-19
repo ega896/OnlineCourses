@@ -15,6 +15,8 @@ namespace Courses.Persistence
 
         public DbSet<Course> Courses { get; set; }
 
+        public DbSet<AppFile> Files { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -26,6 +28,11 @@ namespace Courses.Persistence
 
         private static void IdentityConfiguration(ModelBuilder builder)
         {
+            builder.Entity<User>()
+                .HasMany(x => x.Courses)
+                .WithOne(x => x.User)
+                .HasForeignKey(x => x.UserId);
+
             builder.Entity<User>().ToTable("User");
             builder.Entity<Role>().ToTable("Role");
             builder.Entity<IdentityUserLogin<Guid>>().ToTable("UserLogin");

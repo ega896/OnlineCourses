@@ -1,10 +1,13 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Courses.Domain.Entities;
 using Courses.Infrastructure;
 using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace Courses.Application.Courses.Commands.Create
 {
@@ -25,8 +28,18 @@ namespace Courses.Application.Courses.Commands.Create
             {
                 Name = request.Name,
                 Description = request.Description,
-                AvatarFileName = request.File != null ? await _fileService.SaveFile(request.File) : null
+                //UserId = 
             };
+
+            if (request.Avatar != null)
+            {
+                entity.File = new AppFile
+                {
+                    Caption = request.Avatar.FileName,
+                    Course = entity,
+                    Name =  await _fileService.SaveFile(request.Avatar)
+                };
+            }
 
             _context.Courses.Add(entity);
             await _context.SaveChangesAsync(cancellationToken);
@@ -40,7 +53,9 @@ namespace Courses.Application.Courses.Commands.Create
         public string Name { get; set; }
 
         public string Description { get; set; }
+ 
+        public IFormFile Avatar { get; set; }
 
-        public IFormFile File { get; set; }
+        public ICollection<string> Languages { get; set; }
     }
 }

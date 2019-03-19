@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Courses.Application.Courses.Commands.Create;
 using Courses.Application.Courses.Commands.Delete;
@@ -24,19 +25,18 @@ namespace Courses.WebAPI.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Post([FromBody] CreateCourseCommand command)
+        public async Task<IActionResult> Post([FromForm] CreateCourseCommand command)
         {
+            var a = User.Identity.Name;
             return Ok(await Mediator.Send(command));
         }
 
         [HttpPut("{id}")]
-        [Authorize]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         [HttpDelete("{id}")]
-        [Authorize]
         public async Task<IActionResult> Delete(Guid id)
         {
             return Ok(await Mediator.Send(new DeleteCourseCommand {Id = id}));

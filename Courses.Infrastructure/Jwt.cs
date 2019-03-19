@@ -3,7 +3,7 @@
     public static class Jwt
     {
         public const string Rol = "rol", 
-            Id = "id", 
+            Name = "name", 
             ApiAccess = "api_access";
     }
 }
