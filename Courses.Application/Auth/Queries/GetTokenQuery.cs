@@ -28,8 +28,7 @@ namespace Courses.Application.Auth.Queries
 
             return new
             {
-                id = identity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = await _jwtFactory.GenerateEncodedToken(request.Username, identity),
+                auth_token = await _jwtFactory.GenerateEncodedToken(identity),
                 expires_in = (int) _jwtOptions.ValidFor.TotalSeconds
             };
         }

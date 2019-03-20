@@ -5,7 +5,8 @@ namespace Courses.Infrastructure
 {
     public interface IJwtFactory
     {
-        Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity);
+        Task<string> GenerateEncodedToken(ClaimsIdentity identity);
+
         ClaimsIdentity GenerateClaimsIdentity(string userName, string id);
     }
 }

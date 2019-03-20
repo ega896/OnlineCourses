@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Courses.Domain.Entities;
@@ -6,8 +7,7 @@ using Courses.Infrastructure;
 using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+using Newtonsoft.Json;
 
 namespace Courses.Application.Courses.Commands.Create
 {
@@ -28,7 +28,7 @@ namespace Courses.Application.Courses.Commands.Create
             {
                 Name = request.Name,
                 Description = request.Description,
-                //UserId = 
+                //UserId = request.UserId
             };
 
             if (request.Avatar != null)

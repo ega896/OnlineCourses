@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Courses.Application.Courses.Commands.Create;
 using Courses.Application.Courses.Commands.Delete;
@@ -27,7 +28,7 @@ namespace Courses.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> Post([FromForm] CreateCourseCommand command)
         {
-            var a = User.Identity.Name;
+            //command.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return Ok(await Mediator.Send(command));
         }
 

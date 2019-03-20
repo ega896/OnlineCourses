@@ -1,9 +1,10 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using System.Text;
 using Courses.Application.Courses.Queries;
+using Courses.Domain.Configurations;
 using Courses.Domain.Entities;
+using Courses.Emails;
 using Courses.Infrastructure;
 using Courses.Persistence;
 using Courses.WebAPI.SwaggerFilters;
@@ -37,6 +38,8 @@ namespace Courses.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SmtpConfiguration>(Configuration.GetSection("SmtpConfiguration"));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("CoursesDatabase")));
 
@@ -87,11 +90,7 @@ namespace Courses.WebAPI
                 configureOptions.SaveToken = true;
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => 
-                    policy.RequireClaim(Jwt.Rol,Jwt.ApiAccess));
-            });
+            services.AddAuthorization();
 
             services.AddMvc()
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -101,6 +100,9 @@ namespace Courses.WebAPI
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
             services.AddScoped<IFileService, FileService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             services.AddSwaggerGen(c =>

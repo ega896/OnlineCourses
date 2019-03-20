@@ -17,19 +17,17 @@ namespace Courses.Infrastructure
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string> GenerateEncodedToken(ClaimsIdentity identity)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(JwtRegisteredClaimNames.Sub, identity.FindFirst(ClaimTypes.NameIdentifier).Value),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
-                identity.FindFirst(Jwt.Rol),
-                identity.FindFirst()
+                identity.FindFirst(ClaimTypes.Name)
             };
 
-            // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 _jwtOptions.Issuer,
                 _jwtOptions.Audience,
@@ -47,9 +45,7 @@ namespace Courses.Infrastructure
         {
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
-                new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", id),
-                new Claim(Jwt.Rol, Jwt.ApiAccess)
-
+                new Claim(ClaimTypes.NameIdentifier, id)
             });
         }
 
