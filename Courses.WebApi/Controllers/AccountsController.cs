@@ -21,14 +21,13 @@ namespace Courses.WebApi.Controllers
 
         // PUT api/accounts/confirmemail
         [HttpPut]
-        [Authorize]
         [Route("confirmemail")]
-        public async Task<ActionResult> ConfirmEmail([FromQuery] string token)
+        public async Task<ActionResult> ConfirmEmail([FromQuery] string token, Guid userId)
         {
             var command = new ConfirmAccountEmailCommand
             {
                 Token = token,
-                UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
+                UserId = userId
             };
 
             return Ok(await Mediator.Send(command));

@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
@@ -7,10 +11,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Courses.Emails
 {
@@ -75,16 +75,21 @@ namespace Courses.Emails
             var searchedLocations = getViewResult.SearchedLocations.Concat(findViewResult.SearchedLocations);
             var errorMessage = string.Join(
                 Environment.NewLine,
-                new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations));
+                new[] { $"Unable to find view '{viewName}'. The following locations were searched:" }.Concat(searchedLocations)); ;
 
             throw new InvalidOperationException(errorMessage);
         }
 
         private ActionContext GetActionContext()
         {
-            var httpContext = new DefaultHttpContext {RequestServices = _serviceProvider};
+            var httpContext = new DefaultHttpContext();
+            httpContext.RequestServices = _serviceProvider;
             return new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
         }
 
+    }
+    public interface IRazorViewToStringRenderer
+    {
+        Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model);
     }
 }

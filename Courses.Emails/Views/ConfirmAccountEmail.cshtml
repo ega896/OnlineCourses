@@ -1,4 +1,9 @@
-﻿@page
-@model Courses.Emails.Views.ConfirmAccountEmailModel
+﻿@using Courses.Emails.Views;
+@model Courses.Emails.Views.ConfirmAccountEmailViewModel
 
-<h2>Hello, Demo page from the Razor UI Class Library @Model.Token</h2>
+<h2>Hi @Model.Username,</h2>
+<br />
+<span>To complete your sign up, please verify your email: </span>
+<br />
+<a href="http://localhost:5000/api/accounts/confirmemail?userid=@Model.UserId&token=@Model.Token" target="_blank" style="background-color:#01b3e3; border-collapse:separate !important; border-top:10px solid #01b3e3; border-bottom:10px solid #01b3e3; border-right:45px solid #01b3e3; border-left:45px solid #01b3e3; border-radius:4px; color:#ffffff; display:inline-block; font-family:'Open+Sans','Open Sans',Helvetica, Arial, sans-serif; font-size:13px; font-weight:bold; text-align:center; text-decoration:none; letter-spacing:2px;">VERIFY EMAIL</a>
+<br/>

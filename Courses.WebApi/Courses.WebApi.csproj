@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Courses.Application\Courses.Application.csproj" />
+    <ProjectReference Include="..\Courses.Emails\Courses.Emails.csproj" />
     <ProjectReference Include="..\Courses.Infrastructure\Courses.Infrastructure.csproj" />
   </ItemGroup>
 

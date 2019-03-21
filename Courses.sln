@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Tests", "Courses.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.WebApi", "Courses.WebApi\Courses.WebApi.csproj", "{03802B4E-2365-4185-9B59-1501FCC29FDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courses.Emails", "Courses.Emails\Courses.Emails.csproj", "{779BF1FE-98F1-4E06-8FF3-D77F89216E3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courses.Emails", "Courses.Emails\Courses.Emails.csproj", "{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,10 +47,10 @@ Global
 		{03802B4E-2365-4185-9B59-1501FCC29FDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03802B4E-2365-4185-9B59-1501FCC29FDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03802B4E-2365-4185-9B59-1501FCC29FDF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{779BF1FE-98F1-4E06-8FF3-D77F89216E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{779BF1FE-98F1-4E06-8FF3-D77F89216E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{779BF1FE-98F1-4E06-8FF3-D77F89216E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{779BF1FE-98F1-4E06-8FF3-D77F89216E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

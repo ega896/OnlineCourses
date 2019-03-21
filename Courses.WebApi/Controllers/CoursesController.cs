@@ -28,7 +28,7 @@ namespace Courses.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> Post([FromForm] CreateCourseCommand command)
         {
-            //command.UserId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            //var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
             return Ok(await Mediator.Send(command));
         }
 

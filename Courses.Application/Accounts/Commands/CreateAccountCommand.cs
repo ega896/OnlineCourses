@@ -35,17 +35,14 @@ namespace Courses.Application.Accounts.Commands
 
             await _userManager.CreateAsync(appUser, request.Password);
 
-           
-
-            var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(appUser);
-
-
-            var a = new ConfirmAccountEmailModel
+            var confirmAccountModel = new ConfirmAccountEmailViewModel
             {
-                Token = confirmationToken
+                Token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser),
+                Username = appUser.UserName,
+                UserId = appUser.Id
             };
 
-            string body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/ConfirmAccountEmail.cshtml", a);
+            string body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/ConfirmAccountEmail.cshtml", confirmAccountModel);
 
             await _emailService.SendEmailAsync(new MailMessage
             {
@@ -53,7 +50,8 @@ namespace Courses.Application.Accounts.Commands
                 From = new MailAddress("admin@courses.by"),
                 To = { new MailAddress(appUser.Email)},
                 Priority = MailPriority.High,
-                Subject = $"Account confirmation for user {appUser.UserName}"
+                Subject = $"Account confirmation for user {appUser.UserName}",
+                IsBodyHtml = true
             });
 
             return Unit.Value;

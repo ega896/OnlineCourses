@@ -90,20 +90,20 @@ namespace Courses.WebAPI
                 configureOptions.SaveToken = true;
             });
 
-            services.AddAuthorization();
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddRouting(options => options.LowercaseUrls = true);
-
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
             services.AddScoped<IFileService, FileService>();
             services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddAuthorization();
+
+            services.AddRouting(options => options.LowercaseUrls = true);
 
             services.AddSwaggerGen(c =>
             {
