@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Courses.Domain.Entities;
@@ -7,7 +8,6 @@ using Courses.Infrastructure;
 using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
 
 namespace Courses.Application.Courses.Commands.Create
 {
@@ -15,11 +15,13 @@ namespace Courses.Application.Courses.Commands.Create
     {
         private readonly ApplicationDbContext _context;
         private readonly IFileService _fileService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CreateCourseCommandHandler(ApplicationDbContext context, IFileService fileService)
+        public CreateCourseCommandHandler(ApplicationDbContext context, IFileService fileService, IHttpContextAccessor httpContextAccessor)
         {
             _context = context;
             _fileService = fileService;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<Unit> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
@@ -28,7 +30,7 @@ namespace Courses.Application.Courses.Commands.Create
             {
                 Name = request.Name,
                 Description = request.Description,
-                //UserId = request.UserId
+                UserId = Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier))
             };
 
             if (request.Avatar != null)

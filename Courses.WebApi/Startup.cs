@@ -90,6 +90,11 @@ namespace Courses.WebAPI
                 configureOptions.SaveToken = true;
             });
 
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddHttpContextAccessor();
+
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
             services.AddScoped<IFileService, FileService>();
@@ -97,9 +102,6 @@ namespace Courses.WebAPI
             services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAuthorization();
 

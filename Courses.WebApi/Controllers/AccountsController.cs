@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Courses.Application.Accounts.Commands;
 using Courses.WebAPI.Controllers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Courses.WebApi.Controllers

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Courses.Application.Courses.Commands.Create;
 using Courses.Application.Courses.Commands.Delete;
@@ -13,9 +11,9 @@ namespace Courses.WebAPI.Controllers
     public class CoursesController : BaseController
     {
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get([FromQuery] GetCoursesQuery query)
         {
-            return Ok(await Mediator.Send(new GetCoursesQuery()));
+            return Ok(await Mediator.Send(query));
         }
 
         [HttpGet("{id}")]
@@ -28,7 +26,6 @@ namespace Courses.WebAPI.Controllers
         [Authorize]
         public async Task<IActionResult> Post([FromForm] CreateCourseCommand command)
         {
-            //var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier))
             return Ok(await Mediator.Send(command));
         }
 
