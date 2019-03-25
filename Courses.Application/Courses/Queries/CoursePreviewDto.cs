@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Courses.Domain.Entities;
-using Courses.Infrastructure.Extensions;
 
 namespace Courses.Application.Courses.Queries
 {
