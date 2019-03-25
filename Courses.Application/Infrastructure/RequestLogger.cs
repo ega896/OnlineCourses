@@ -9,7 +9,7 @@ namespace Courses.Application.Infrastructure
     {
         private readonly ILogger _logger;
 
-        public RequestLogger(ILogger logger)
+        public RequestLogger(ILogger<TRequest> logger)
         {
             _logger = logger;
         }

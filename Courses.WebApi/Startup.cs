@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Text;
 using Courses.Application.Courses.Queries;
+using Courses.Application.Infrastructure;
 using Courses.Domain.Configurations;
 using Courses.Domain.Entities;
 using Courses.Emails;
@@ -9,6 +10,7 @@ using Courses.Infrastructure;
 using Courses.Persistence;
 using Courses.WebAPI.SwaggerFilters;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -64,6 +66,9 @@ namespace Courses.WebAPI
             services.AddTransient<IEmailService, EmailService>();
             services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
