@@ -15,7 +15,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Courses.Domain\Courses.Domain.csproj" />
     <ProjectReference Include="..\Courses.Emails\Courses.Emails.csproj" />
-    <ProjectReference Include="..\Courses.Infrastructure\Courses.Infrastructure.csproj" />
     <ProjectReference Include="..\Courses.Persistence\Courses.Persistence.csproj" />
   </ItemGroup>
 

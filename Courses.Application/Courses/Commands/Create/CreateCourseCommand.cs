@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
 using Courses.Domain.Entities;
-using Courses.Infrastructure;
 using Courses.Infrastructure.Extensions;
 using Courses.Persistence;
 using MediatR;

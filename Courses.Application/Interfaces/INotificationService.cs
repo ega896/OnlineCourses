@@ -1,9 +1,9 @@
 ﻿using System.Net.Mail;
 using System.Threading.Tasks;
 
-namespace Courses.Infrastructure
+namespace Courses.Application.Interfaces
 {
-    public interface IEmailService
+    public interface INotificationService
     {
         Task SendEmailAsync(MailMessage message);
     }

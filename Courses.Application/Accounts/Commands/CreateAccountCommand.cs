@@ -1,10 +1,6 @@
-﻿using System.Net.Mail;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using Courses.Domain.Entities;
-using Courses.Emails;
-using Courses.Emails.Views;
-using Courses.Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
@@ -13,14 +9,12 @@ namespace Courses.Application.Accounts.Commands
     public class CreateAccountCommandHandler : IRequestHandler<CreateAccountCommand, Unit>
     {
         private readonly UserManager<User> _userManager;
-        private readonly IEmailService _emailService;
-        private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
+        private readonly IMediator _mediator;
 
-        public CreateAccountCommandHandler(UserManager<User> userManager, IEmailService emailService, IRazorViewToStringRenderer razorViewToStringRenderer)
+        public CreateAccountCommandHandler(UserManager<User> userManager, IMediator mediator)
         {
             _userManager = userManager;
-            _emailService = emailService;
-            _razorViewToStringRenderer = razorViewToStringRenderer;
+            _mediator = mediator;
         }
 
         public async Task<Unit> Handle(CreateAccountCommand request, CancellationToken cancellationToken)
@@ -35,24 +29,13 @@ namespace Courses.Application.Accounts.Commands
 
             await _userManager.CreateAsync(appUser, request.Password);
 
-            var confirmAccountModel = new ConfirmAccountEmailViewModel
+            await _mediator.Publish(new UserCreatedEvent
             {
                 Token = await _userManager.GenerateEmailConfirmationTokenAsync(appUser),
                 Username = appUser.UserName,
-                UserId = appUser.Id
-            };
-
-            string body = await _razorViewToStringRenderer.RenderViewToStringAsync("/Views/ConfirmAccountEmail.cshtml", confirmAccountModel);
-
-            await _emailService.SendEmailAsync(new MailMessage
-            {
-                Body = body,
-                From = new MailAddress("admin@courses.by"),
-                To = { new MailAddress(appUser.Email)},
-                Priority = MailPriority.High,
-                Subject = $"Account confirmation for user {appUser.UserName}",
-                IsBodyHtml = true
-            });
+                UserId = appUser.Id,
+                Email = appUser.Email
+            }, cancellationToken);
 
             return Unit.Value;
         }

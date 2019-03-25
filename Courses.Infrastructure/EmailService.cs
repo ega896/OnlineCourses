@@ -1,12 +1,13 @@
 ﻿using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
 using Courses.Domain.Configurations;
 using Microsoft.Extensions.Options;
 
 namespace Courses.Infrastructure
 {
-    public class EmailService : IEmailService
+    public class EmailService : INotificationService
     {
         private readonly IOptions<SmtpConfiguration> _smtpConfiguration;
 
