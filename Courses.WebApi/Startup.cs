@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -54,6 +55,17 @@ namespace Courses.WebAPI
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+
+            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
+
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
             services.Configure<JwtIssuerOptions>(options =>
@@ -90,19 +102,6 @@ namespace Courses.WebAPI
                 configureOptions.SaveToken = true;
             });
 
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddHttpContextAccessor();
-
-            services.AddSingleton<IJwtFactory, JwtFactory>();
-            services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
-            services.AddScoped<IFileService, FileService>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
-
-            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
-
             services.AddAuthorization();
 
             services.AddRouting(options => options.LowercaseUrls = true);
@@ -124,6 +123,8 @@ namespace Courses.WebAPI
 
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -155,7 +156,7 @@ namespace Courses.WebAPI
             });
 
             app.UseAuthentication();
-
+            
             app.UseMvc();
 
             app.UseSwagger();

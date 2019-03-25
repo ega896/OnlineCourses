@@ -17,9 +17,9 @@ namespace Courses.WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get([FromQuery] GetCoursePreviewQuery query)
         {
-            return Ok(await Mediator.Send(new GetCoursePreviewQuery {Id = id}));
+            return Ok(await Mediator.Send(query));
         }
 
         [HttpPost]

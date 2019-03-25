@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
 using Courses.Domain.Entities;
 using Courses.Infrastructure;
+using Courses.Infrastructure.Extensions;
 using Courses.Persistence;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -26,11 +26,13 @@ namespace Courses.Application.Courses.Commands.Create
 
         public async Task<Unit> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
+            var user = _httpContextAccessor.CurrentUser() ?? throw new Exception();
+
             var entity = new Course
             {
                 Name = request.Name,
                 Description = request.Description,
-                UserId = Guid.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier))
+                UserId = user
             };
 
             if (request.Avatar != null)
