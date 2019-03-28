@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Courses.Application.Extensions;
 using Courses.Infrastructure.Extensions;
 using Courses.Persistence;
 using MediatR;

@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Tests", "Courses.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.WebApi", "Courses.WebApi\Courses.WebApi.csproj", "{03802B4E-2365-4185-9B59-1501FCC29FDF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courses.Emails", "Courses.Emails\Courses.Emails.csproj", "{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Courses.Emails", "Courses.Emails\Courses.Emails.csproj", "{BC4EC728-37D7-4CF8-BF7D-FF24A48440E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

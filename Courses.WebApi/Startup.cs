@@ -3,8 +3,10 @@ using System.Reflection;
 using System.Text;
 using Courses.Application.Courses.Queries;
 using Courses.Application.Infrastructure;
+using Courses.Application.Interfaces;
 using Courses.Domain.Configurations;
 using Courses.Domain.Entities;
+using Courses.Domain.Jwt;
 using Courses.Emails;
 using Courses.Infrastructure;
 using Courses.Persistence;
@@ -63,7 +65,7 @@ namespace Courses.WebAPI
             services.AddSingleton<IJwtFactory, JwtFactory>();
             services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
             services.AddScoped<IFileService, FileService>();
-            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<INotificationService, EmailService>();
             services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));

@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
+using Courses.Domain.Jwt;
 using Microsoft.Extensions.Options;
 
 namespace Courses.Infrastructure

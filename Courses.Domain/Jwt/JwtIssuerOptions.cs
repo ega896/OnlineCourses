@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Courses.Infrastructure
+namespace Courses.Domain.Jwt
 {
     public class JwtIssuerOptions
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Courses.Infrastructure.Extensions
+namespace Courses.Application.Extensions
 {
     public static class DbPagination
     {

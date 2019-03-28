@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Courses.Application.Interfaces;
 using Courses.Domain.Entities;
+using Courses.Domain.Jwt;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
