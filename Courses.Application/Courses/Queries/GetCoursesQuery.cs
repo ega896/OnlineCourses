@@ -22,23 +22,23 @@ namespace Courses.Application.Courses.Queries
     public class GetCoursesQueryHandler : IRequestHandler<GetCoursesQuery, PagedResult<CoursePreviewDto>>
     {
         private readonly ApplicationDbContext _context;
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        //private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GetCoursesQueryHandler(ApplicationDbContext context, IHttpContextAccessor httpContextAccessor)
+        public GetCoursesQueryHandler(ApplicationDbContext context/*, IHttpContextAccessor httpContextAccessor*/)
         {
             _context = context;
-            _httpContextAccessor = httpContextAccessor;
+            //_httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<PagedResult<CoursePreviewDto>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
         {
             var query = _context.Courses.AsNoTracking();
-            var userId = _httpContextAccessor.CurrentUser();
+            //var userId = _httpContextAccessor.CurrentUser();
 
-            if (request.IsUserOnly)
-            {
-                query = query.Where(x => x.UserId == userId);
-            }
+            //if (request.IsUserOnly)
+            //{
+            //    query = query.Where(x => x.UserId == userId);
+            //}
 
             return await query.Select(CoursePreviewDto.Projection).GetPaged(request.PageNumber, request.PageSize);
         }

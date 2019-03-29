@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Courses.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -17,8 +16,6 @@ namespace Courses.Persistence
 
         public void SeedEverything(ApplicationDbContext context)
         {
-            context.Database.Migrate();
-
             if (!EnumerableExtensions.Any(context.Users)) SeedUsers(context);
 
             if (!EnumerableExtensions.Any(context.Courses)) SeedCourses(context);

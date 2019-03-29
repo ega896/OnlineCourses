@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Courses.Application.Courses.Queries;
@@ -16,10 +17,10 @@ using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -121,7 +122,8 @@ namespace Courses.WebAPI
                     Version = "v1"
                 });
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { 
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
                     In = "header",
                     Description = "Please enter bearer token",
                     Name = "Authorization",
@@ -156,14 +158,21 @@ namespace Courses.WebAPI
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
+            var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+
             app.UseStaticFiles(new StaticFileOptions
             {
-                FileProvider = new PhysicalFileProvider(Configuration.GetValue<string>("FileStoragePath")),
-                RequestPath = "/files"
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "files")),
+                RequestPath = "/files",
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
             });
 
             app.UseAuthentication();
-            
+
             app.UseMvc();
 
             app.UseSwagger();

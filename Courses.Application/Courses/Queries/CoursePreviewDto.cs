@@ -12,6 +12,8 @@ namespace Courses.Application.Courses.Queries
 
         public string Description { get; set; }
 
+        public string AvatarFilename { get; set; }
+
         public static Expression<Func<Course, CoursePreviewDto>> Projection
         {
             get
@@ -20,7 +22,8 @@ namespace Courses.Application.Courses.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description
+                    Description = c.Description,
+                    AvatarFilename = c.File.Name
                 };
             }
         }

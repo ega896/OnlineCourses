@@ -26,7 +26,7 @@ namespace Courses.Application.Courses.Commands.Create
 
         public async Task<Unit> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
         {
-            var user = _httpContextAccessor.CurrentUser() ?? throw new Exception();
+            var user = _httpContextAccessor.CurrentUser() ?? throw new Exception("Cannot find current user from request");
 
             var entity = new Course
             {
