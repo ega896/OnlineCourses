@@ -36,7 +36,7 @@ namespace Courses.WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("CoursesDatabase")));
+                options.UseSqlServer(Configuration.GetConnectionString("CoursesDatabase")));
 
             services.AddIdentityCore<User>(options =>
                 {
