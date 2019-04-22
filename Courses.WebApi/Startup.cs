@@ -1,21 +1,30 @@
 ﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Courses.Application.Courses.Queries;
+using Courses.Application.Infrastructure;
+using Courses.Application.Interfaces;
+using Courses.Domain.Configurations;
 using Courses.Domain.Entities;
+using Courses.Domain.Jwt;
+using Courses.Emails;
 using Courses.Infrastructure;
 using Courses.Persistence;
 using Courses.WebAPI.SwaggerFilters;
 using MediatR;
+using MediatR.Pipeline;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
@@ -35,6 +44,8 @@ namespace Courses.WebAPI
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SmtpConfiguration>(Configuration.GetSection("SmtpConfiguration"));
+
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("CoursesDatabase")));
 
@@ -48,6 +59,20 @@ namespace Courses.WebAPI
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSingleton<IJwtFactory, JwtFactory>();
+            services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddTransient<INotificationService, EmailService>();
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPreProcessorBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
 
@@ -85,21 +110,9 @@ namespace Courses.WebAPI
                 configureOptions.SaveToken = true;
             });
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("ApiUser", policy => 
-                    policy.RequireClaim(Jwt.Rol,Jwt.ApiAccess));
-            });
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddAuthorization();
 
             services.AddRouting(options => options.LowercaseUrls = true);
-
-            services.AddSingleton<IJwtFactory, JwtFactory>();
-            services.AddSingleton<JwtIssuerOptions, JwtIssuerOptions>();
-            services.AddScoped<IFileService, FileService>();
-            services.AddMediatR(typeof(GetCoursePreviewQueryHandler).GetTypeInfo().Assembly);
 
             services.AddSwaggerGen(c =>
             {
@@ -109,7 +122,8 @@ namespace Courses.WebAPI
                     Version = "v1"
                 });
 
-                c.AddSecurityDefinition("Bearer", new ApiKeyScheme { 
+                c.AddSecurityDefinition("Bearer", new ApiKeyScheme
+                {
                     In = "header",
                     Description = "Please enter bearer token",
                     Name = "Authorization",
@@ -118,6 +132,8 @@ namespace Courses.WebAPI
 
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
             });
+
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -142,7 +158,18 @@ namespace Courses.WebAPI
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
-            app.UseStaticFiles();
+            var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "files")),
+                RequestPath = "/files",
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
+            });
 
             app.UseAuthentication();
 

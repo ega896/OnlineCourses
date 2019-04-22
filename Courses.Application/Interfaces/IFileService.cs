@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
-namespace Courses.Infrastructure
+namespace Courses.Application.Interfaces
 {
     public interface IFileService
     {

@@ -8,7 +8,6 @@ namespace Courses.WebApi.Controllers
     [Route("api/[controller]")]
     public class AuthController : BaseController
     {
-        // GET api/auth/login
         [HttpGet("login")]
         public async Task<IActionResult> Post([FromQuery] GetTokenQuery credentials)
         {

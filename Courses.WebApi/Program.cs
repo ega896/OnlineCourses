@@ -1,7 +1,9 @@
 ﻿using System;
 using Courses.Persistence;
+using Courses.WebApi.Helpers;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -11,6 +13,8 @@ namespace Courses.WebAPI
     {
         public static void Main(string[] args)
         {
+            CurrentDirectoryHelpers.SetCurrentDirectory();
+
             var host = CreateWebHostBuilder(args).Build();
 
             #if !(DEBUG)
@@ -22,6 +26,7 @@ namespace Courses.WebAPI
                 try
                 {
                     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+                    context.Database.Migrate();
                     CoursesInitializer.Initialize(context);
                 }
                 catch (Exception ex)
@@ -36,6 +41,12 @@ namespace Courses.WebAPI
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .ConfigureLogging((hostingContext, logging) =>
+                {
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddConsole();
+                    logging.AddDebug();
+                })
                 .UseStartup<Startup>();
     }
 }

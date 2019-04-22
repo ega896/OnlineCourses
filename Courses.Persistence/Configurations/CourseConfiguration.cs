@@ -8,6 +8,8 @@ namespace Courses.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
+            builder.ToTable("Courses");
+
             builder.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(30);
@@ -15,6 +17,10 @@ namespace Courses.Persistence.Configurations
             builder.Property(e => e.Description)
                 .IsRequired()
                 .HasMaxLength(260);
+
+            builder.HasOne(p => p.File)
+                .WithOne(i => i.Course)
+                .HasForeignKey<AppFile>(b => b.CourseId);
         }
     }
 }

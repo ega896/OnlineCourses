@@ -1,16 +1,15 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
 using Courses.Domain.Entities;
-using Courses.Infrastructure;
+using Courses.Domain.Jwt;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Newtonsoft.Json;
 
 namespace Courses.Application.Auth.Queries
 {
-    public class GetTokenQueryHandler : IRequestHandler<GetTokenQuery, string>
+    public class GetTokenQueryHandler : IRequestHandler<GetTokenQuery, object>
     {
         private readonly UserManager<User> _userManager;
         private readonly IJwtFactory _jwtFactory;
@@ -23,13 +22,15 @@ namespace Courses.Application.Auth.Queries
             _jwtOptions = jwtOptions;
         }
 
-        public async Task<string> Handle(GetTokenQuery request, CancellationToken cancellationToken)
+        public async Task<object> Handle(GetTokenQuery request, CancellationToken cancellationToken)
         {
             var identity = await GetClaimsIdentity(request.Username, request.Password);
 
-            var jwt = await GenerateJwt(identity, _jwtFactory, request.Username, _jwtOptions, new JsonSerializerSettings { Formatting = Formatting.Indented });
-
-            return jwt;
+            return new
+            {
+                auth_token = await _jwtFactory.GenerateEncodedToken(identity),
+                expires_in = (int) _jwtOptions.ValidFor.TotalSeconds
+            };
         }
 
         private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password)
@@ -48,21 +49,9 @@ namespace Courses.Application.Auth.Queries
 
             return await Task.FromResult<ClaimsIdentity>(null);
         }
-
-        private static async Task<string> GenerateJwt(ClaimsIdentity identity, IJwtFactory jwtFactory, string userName, JwtIssuerOptions jwtOptions, JsonSerializerSettings serializerSettings)
-        {
-            var response = new
-            {
-                id = identity.Claims.Single(c => c.Type == "id").Value,
-                auth_token = await jwtFactory.GenerateEncodedToken(userName, identity),
-                expires_in = (int)jwtOptions.ValidFor.TotalSeconds
-            };
-
-            return JsonConvert.SerializeObject(response, serializerSettings);
-        }
     }
 
-    public class GetTokenQuery : IRequest<string>
+    public class GetTokenQuery : IRequest<object>
     {
         public string Username { get; set; }
         public string Password { get; set; }

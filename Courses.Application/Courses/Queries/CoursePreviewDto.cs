@@ -4,13 +4,15 @@ using Courses.Domain.Entities;
 
 namespace Courses.Application.Courses.Queries
 {
-    public class CoursePreviewDto
+    public class CoursePreviewDto 
     {
         public Guid Id { get; set; }
 
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        public string AvatarFilename { get; set; }
 
         public static Expression<Func<Course, CoursePreviewDto>> Projection
         {
@@ -20,7 +22,8 @@ namespace Courses.Application.Courses.Queries
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Description = c.Description
+                    Description = c.Description,
+                    AvatarFilename = c.File.Name
                 };
             }
         }

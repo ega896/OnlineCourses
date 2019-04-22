@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
@@ -19,8 +20,7 @@ namespace Courses.Infrastructure
 
         public async Task<long> SaveFiles(ICollection<IFormFile> files)
         {
-            // full path to file in temp location
-            var filePath = _hostingEnvironment.WebRootPath;
+            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "files");
 
             foreach (var file in files)
             {
@@ -37,11 +37,10 @@ namespace Courses.Infrastructure
 
         public async Task<string> SaveFile(IFormFile file)
         {
-            // full path to file in temp location
-            var filePath = _hostingEnvironment.WebRootPath;
+            var filePath = Path.Combine(_hostingEnvironment.ContentRootPath, "files");
             var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
 
-            using (var stream = new FileStream($"{filePath}/fileName", FileMode.Create))
+            using (var stream = new FileStream($"{filePath}/{fileName}", FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }

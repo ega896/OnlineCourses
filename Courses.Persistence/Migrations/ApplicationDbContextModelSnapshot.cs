@@ -19,12 +19,29 @@ namespace Courses.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Courses.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Courses.Domain.Entities.AppFile", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AvatarFileName");
+                    b.Property<string>("Caption");
+
+                    b.Property<Guid>("CourseId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId")
+                        .IsUnique();
+
+                    b.ToTable("Files");
+                });
+
+            modelBuilder.Entity("Courses.Domain.Entities.Course", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -34,7 +51,11 @@ namespace Courses.Persistence.Migrations
                         .IsRequired()
                         .HasMaxLength(30);
 
+                    b.Property<Guid>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
                 });
@@ -199,6 +220,22 @@ namespace Courses.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("UserToken");
+                });
+
+            modelBuilder.Entity("Courses.Domain.Entities.AppFile", b =>
+                {
+                    b.HasOne("Courses.Domain.Entities.Course", "Course")
+                        .WithOne("File")
+                        .HasForeignKey("Courses.Domain.Entities.AppFile", "CourseId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Courses.Domain.Entities.Course", b =>
+                {
+                    b.HasOne("Courses.Domain.Entities.User", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>

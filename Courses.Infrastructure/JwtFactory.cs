@@ -3,6 +3,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using Courses.Application.Interfaces;
+using Courses.Domain.Jwt;
 using Microsoft.Extensions.Options;
 
 namespace Courses.Infrastructure
@@ -17,19 +19,17 @@ namespace Courses.Infrastructure
             ThrowIfInvalidOptions(_jwtOptions);
         }
 
-        public async Task<string> GenerateEncodedToken(string userName, ClaimsIdentity identity)
+        public async Task<string> GenerateEncodedToken(ClaimsIdentity identity)
         {
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, userName),
+                new Claim(JwtRegisteredClaimNames.Sub, identity.FindFirst(ClaimTypes.NameIdentifier).Value),
                 new Claim(JwtRegisteredClaimNames.Jti, await _jwtOptions.JtiGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(_jwtOptions.IssuedAt).ToString(),
                     ClaimValueTypes.Integer64),
-                identity.FindFirst(Jwt.Rol),
-                identity.FindFirst(Jwt.Id)
+                identity.FindFirst(ClaimTypes.Name)
             };
 
-            // Create the JWT security token and encode it.
             var jwt = new JwtSecurityToken(
                 _jwtOptions.Issuer,
                 _jwtOptions.Audience,
@@ -47,12 +47,11 @@ namespace Courses.Infrastructure
         {
             return new ClaimsIdentity(new GenericIdentity(userName, "Token"), new[]
             {
-                new Claim(Jwt.Id, id),
-                new Claim(Jwt.Rol, Jwt.ApiAccess)
+                new Claim(ClaimTypes.NameIdentifier, id)
             });
         }
 
-        /// <returns>Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
+        /// <returns> Date converted to seconds since Unix epoch (Jan 1, 1970, midnight UTC).</returns>
         private static long ToUnixEpochDate(DateTime date)
             => (long) Math.Round((date.ToUniversalTime() -
                                   new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero))
@@ -63,19 +62,13 @@ namespace Courses.Infrastructure
             if (options == null) throw new ArgumentNullException(nameof(options));
 
             if (options.ValidFor <= TimeSpan.Zero)
-            {
                 throw new ArgumentException("Must be a non-zero TimeSpan.", nameof(JwtIssuerOptions.ValidFor));
-            }
 
             if (options.SigningCredentials == null) 
-            {
                 throw new ArgumentNullException(nameof(JwtIssuerOptions.SigningCredentials));
-            }
 
             if (options.JtiGenerator == null)
-            {
                 throw new ArgumentNullException(nameof(JwtIssuerOptions.JtiGenerator));
-            }
         }
     }
 }
